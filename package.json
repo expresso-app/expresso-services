@@ -1,0 +1,20 @@
+{
+  "name": "expresso-services",
+  "version": "1.0.0",
+  "description": "Expresso Services",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "publish": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expresso-app/expresso-services.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/expresso-app/expresso-services/issues"
+  },
+  "homepage": "https://github.com/expresso-app/expresso-services#readme"
+}
