@@ -13,6 +13,9 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.4.11"
+  },
   "bugs": {
     "url": "https://github.com/expresso-app/expresso-services/issues"
   },
