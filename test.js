@@ -3,13 +3,13 @@ const EmailService = require("./services/email-service");
 const config_dev = {
     host: "smtp.mailtrap.io",
     address: "de0b0c7e7edb11",
-    password: "b65bab13e45740",
+    password: "",
 }
 
 const config_prod = {
     host: "Gmail",
     address: "expressoapp.2020@gmail.com",
-    password: "expresso_88",
+    password: "",
 };
 
 
