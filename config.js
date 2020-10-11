@@ -1,5 +1,3 @@
-const path = require('path');
-
 require('custom-env').env(true);
 
 module.exports = {
