@@ -58,9 +58,9 @@ class EmailService {
 
     sendEmail = async options => {
         if (process.env.NODE_ENV === "production") {
-            await sendEmailProd(options);
+            await this.sendEmailProd(options);
         } else {
-            await sendEmailDev(options);
+            await this.sendEmailDev(options);
         }
     }
 }
