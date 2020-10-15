@@ -1,5 +1,5 @@
 const config = require("./config");
-const EmailService = require("./services/email-service");
+const { EmailService } = require("./index");
 
 const mailOptions = {
     from: `Expresso App <${config.email_address}>`,
