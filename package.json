@@ -1,6 +1,6 @@
 {
   "name": "expresso-services",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Expresso Services",
   "main": "index.js",
   "scripts": {
