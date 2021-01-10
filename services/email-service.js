@@ -1,67 +1,44 @@
 const nodemailer = require('nodemailer');
+const config = require('../config');
 
 class EmailService {
     constructor(host, email, password) {
         this.host = host;
         this.email = email;
         this.password = password;
+
+        this.createTransporter();
     }
 
-    // Dev Mail Server: https://mailtrap.io/inboxes/1025540/messages
-    sendEmailDev = async options => {
-        // 1. create a transporter
-        const transporter = nodemailer.createTransport({
-            host: this.host,
-            auth: {
-                user: this.email,
-                pass: this.password
-            }
-        });
+    createTransporter = () => {
+        let transporter = null;
 
-        // 2. define email options
-        const mailOptions = {
-            from: options.from,
-            to: options.email,
-            subject: options.subject,
-            text: options.message,
-            //html: options.html
-        };
-
-        // 3. send email
-        await transporter.sendMail(mailOptions);
-    }
-
-    sendEmailProd = async options => {
-        // 1. create a transporter
-        const transporter = nodemailer.createTransport({
-            service: this.host,
-            auth: {
-                user: this.email,
-                pass: this.password
-            }
+        if(config.env === 'production') {
             // ACTIVATE in Gmail "less secure app" option
             // https://nodemailer.com/usage/using-gmail/
-        });
+            transporter = nodemailer.createTransport({
+                service: this.host,
+                auth: {
+                    user: this.email,
+                    pass: this.password
+                }
+            });
+        } else {
+            // Dev Mail Server: https://mailtrap.io/inboxes/1025540/messages
+            transporter = nodemailer.createTransport({
+                host: this.host,
+                auth: {
+                    user: this.email,
+                    pass: this.password
+                }
+            });
+        }
 
-        // 2. define email options
-        const mailOptions = {
-            from: options.from,
-            to: options.email,
-            subject: options.subject,
-            text: options.message,
-            //html: options.html
-        };
-
-        // 3. send email
-        await transporter.sendMail(mailOptions);
+        this.transporter = transporter;
     }
 
     sendEmail = async options => {
-        if (process.env.NODE_ENV === "production") {
-            await this.sendEmailProd(options);
-        } else {
-            await this.sendEmailDev(options);
-        }
+        await this.transporter.sendMail(options);
     }
 }
 
