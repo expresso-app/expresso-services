@@ -7,38 +7,45 @@ class EmailService {
         this.email = email;
         this.password = password;
 
-        this.createTransporter();
+        this.transporter = this.createTransporter();
     }
 
-    createTransporter = () => {
-        let transporter = null;
-
-        if(config.env === 'production') {
+    createTransporter() {
+        if (config.env === 'production') {
             // ACTIVATE in Gmail "less secure app" option
             // https://nodemailer.com/usage/using-gmail/
-            transporter = nodemailer.createTransport({
+            return nodemailer.createTransport({
                 service: this.host,
                 auth: {
                     user: this.email,
                     pass: this.password
                 }
             });
-        } else {
-            // Dev Mail Server: https://mailtrap.io/inboxes/1025540/messages
-            transporter = nodemailer.createTransport({
-                host: this.host,
-                auth: {
-                    user: this.email,
-                    pass: this.password
-                }
-            });
+
+            // /// SendGrid
+            // return 1;
         }
 
-        this.transporter = transporter;
+        // Dev Mail Server: https://mailtrap.io/inboxes/1025540/messages
+        return nodemailer.createTransport({
+            host: this.host,
+            auth: {
+                user: this.email,
+                pass: this.password
+            }
+        });
     }
 
-    sendEmail = async options => {
-        await this.transporter.sendMail(options);
+    /**
+    * Sends email using specified options object
+    * @param {string} options.from - sender address
+    * @param {string} options.to - list of receivers
+    * @param {string} options.subject - Subject line
+    * @param {string} options.text - plain text body
+    * @param {string} options.html - html body
+    */
+    async sendEmail(options) {
+        return await this.transporter.sendMail(options);
     }
 }
 

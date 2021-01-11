@@ -1,13 +1,13 @@
 const config = require("./config");
 const { EmailService } = require("./index");
 
-const mailOptions = {
+const options = {
     from: `Expresso App <${config.email_address}>`,
-    to: "m.khatab.88@gmail.com",
+    to: "expressoapp.2020@gmail.com",
     subject: "test email",
-    message: `Test email from email service \n Environment: ${process.env.NODE_ENV}`,
-    //html: options.html
+    text: `Test email \n Environment: ${process.env.NODE_ENV}`,
+    html: "<p>hello form test email</p>"
 };
 
 const emailSvc = new EmailService(config.email_host, config.email_address, config.email_password);
-emailSvc.sendEmail(mailOptions);
+emailSvc.sendEmail(options);
