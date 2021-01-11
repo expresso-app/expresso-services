@@ -45,7 +45,7 @@ class EmailService {
     * @param {string} options.html - html body
     */
     async sendEmail(options) {
-        return await this.transporter.sendMail(options);
+        await this.transporter.sendMail(options);
     }
 }
 

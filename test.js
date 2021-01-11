@@ -11,3 +11,5 @@ const options = {
 
 const emailSvc = new EmailService(config.email_host, config.email_address, config.email_password);
 emailSvc.sendEmail(options);
+
+console.log("FINISH!");
