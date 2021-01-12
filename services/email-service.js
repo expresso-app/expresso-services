@@ -2,9 +2,9 @@ const nodemailer = require('nodemailer');
 const config = require('../config');
 
 class EmailService {
-    constructor(host, email, password) {
+    constructor(host, userName, password) {
         this.host = host;
-        this.email = email;
+        this.userName = userName;
         this.password = password;
 
         this.transporter = this.createTransporter();
@@ -12,25 +12,28 @@ class EmailService {
 
     createTransporter() {
         if (config.env === 'production') {
-            // ACTIVATE in Gmail "less secure app" option
-            // https://nodemailer.com/usage/using-gmail/
+            /// Gmail
+            /// ACTIVATE in Gmail "less secure app" option
+            /// https://nodemailer.com/usage/using-gmail/
+
+            /// SendGrid
+            /// https://app.sendgrid.com/guide/integrate/langs/smtp
+
             return nodemailer.createTransport({
                 service: this.host,
                 auth: {
-                    user: this.email,
+                    user: this.userName,
                     pass: this.password
                 }
             });
-
-            // /// SendGrid
-            // return 1;
         }
 
-        // Dev Mail Server: https://mailtrap.io/inboxes/1025540/messages
+        /// Dev Mail Server
+        /// https://mailtrap.io/inboxes/1025540/messages
         return nodemailer.createTransport({
             host: this.host,
             auth: {
-                user: this.email,
+                user: this.userName,
                 pass: this.password
             }
         });
@@ -45,7 +48,11 @@ class EmailService {
     * @param {string} options.html - html body
     */
     async sendEmail(options) {
-        await this.transporter.sendMail(options);
+        try {
+            await this.transporter.sendMail(options);
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
